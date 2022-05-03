@@ -17,11 +17,22 @@ keywords = ["sgx", "enclave", "ftxsgx-runner"]
 categories = ["development-tools::build-utils", "command-line-utilities"]
 edition = "2018"
 
+[[bin]]
+name = "ftxsgx-elf2sgxs"
+
+[[bin]]
+name = "ftxsgx-runner-cargo"
+required-features = ["aesm-client", "sgxs-loaders", "enclave-runner"]
+
+[[bin]]
+name = "ftxsgx-runner"
+required-features = ["aesm-client", "sgxs-loaders", "enclave-runner"]
+
 [dependencies]
 # Project dependencies
-aesm-client = { version = "0.5.0", path = "../aesm-client", features = ["sgxs"] }
-sgxs-loaders = { version = "0.3.0", path = "../sgxs-loaders" }
-enclave-runner = { version = "0.5.0", path = "../enclave-runner" }
+aesm-client = { version = "0.5.0", path = "../aesm-client", features = ["sgxs"], optional = true }
+sgxs-loaders = { version = "0.3.0", path = "../sgxs-loaders", optional = true }
+enclave-runner = { version = "0.5.0", path = "../enclave-runner", optional = true }
 sgxs = { version = "0.7.0", path = "../sgxs" }
 sgx-isa = { version = "0.4.0", path = "../sgx-isa" }
 
@@ -36,3 +47,6 @@ toml = "0.4.10"            # MIT/Apache-2.0
 num_cpus = "1.9.0"         # MIT/Apache-2.0
 libc = "0.2.48"            # MIT/Apache-2.0
 nix = "0.13.0"             # MIT
+
+[features]
+default = ["aesm-client", "sgxs-loaders", "enclave-runner"]
